@@ -1,0 +1,11 @@
+# WorkBuddy 的项目内部笔记，不进入版本库
+.workbuddy/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini

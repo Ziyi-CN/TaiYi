@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>太乙 · 问易</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="brand">
+      <div class="brand-seal">易</div>
+      <h1 class="book-title">太乙</h1>
+      <p class="book-sub">问易</p>
+    </div>
+    <nav class="top-actions">
+      <button id="btnHistory">卦史</button>
+      <button id="btnSettings">设置</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="panel" id="stageAsk">
+      <h2 class="panel-head">起 卦</h2>
+
+      <div class="ask-row">
+        <label class="field" style="flex:1;margin:0">
+          <span>所问何事（可不填，但填了更准）</span>
+          <input type="text" id="question" maxlength="120" placeholder="如：这份工作该不该换？">
+        </label>
+      </div>
+
+      <div class="method-switch" id="methodSwitch">
+        <button data-method="coin" class="on">金钱卦<span>标准</span></button>
+        <button data-method="yarrow">大衍筮法<span>进阶</span></button>
+      </div>
+
+      <p class="hint" id="methodNote"></p>
+      <p class="hint" id="distNote" style="margin-top:-6px;color:#8B8170"></p>
+
+      <div class="stage-grid" style="margin-top:20px">
+        <div class="gua-build" id="buildArea"></div>
+        <div id="ritualArea"></div>
+      </div>
+
+      <div class="progress-track" id="progress"></div>
+
+      <div class="step-actions" id="stepActions"></div>
+    </section>
+
+    <section class="panel hidden" id="stageResult">
+      <h2 class="panel-head" id="resultHead">卦 象</h2>
+      <div id="resultBody"></div>
+    </section>
+
+  </main>
+
+  <p class="foot">六十四卦 · 三百八十四爻　—　自用而已，不涉鬼神</p>
+</div>
+
+<div class="veil" id="veil"></div>
+
+<aside class="drawer" id="historyDrawer">
+  <div class="drawer-head">
+    <span>卦 史</span>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button class="ghost" id="btnExportHistory">导出</button>
+      <button class="ghost" id="btnImportHistory">导入</button>
+      <button class="ghost" id="btnClearHistory">清空</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    </div>
+  </div>
+  <div class="drawer-body" id="historyBody"></div>
+</aside>
+
+<div class="modal" id="settingsModal">
+  <h2>模 型 设 置</h2>
+  <p class="hint" style="margin:0 0 18px">
+    填入任意兼容 OpenAI 格式的接口即可。推荐 DeepSeek（api.deepseek.com）。
+    密钥只存在你自己的浏览器里，不会上传到任何第三方服务器。
+  </p>
+  <label class="field">
+    <span>接口地址</span>
+    <input type="text" id="cfgBase" placeholder="https://api.deepseek.com/chat/completions">
+  </label>
+  <label class="field">
+    <span>模型名称</span>
+    <input type="text" id="cfgModel" placeholder="deepseek-chat">
+  </label>
+  <label class="field">
+    <span>API Key</span>
+    <input type="password" id="cfgKey" placeholder="sk-...">
+  </label>
+  <div class="modal-actions">
+    <button id="btnTestApi">测试连接</button>
+    <button id="btnCloseSettings">取消</button>
+    <button class="primary" id="btnSaveSettings">保存</button>
+  </div>
+  <p class="hint" id="cfgStatus" style="margin-top:12px"></p>
+</div>
+
+<script src="data/zhouyi.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
