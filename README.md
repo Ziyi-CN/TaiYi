@@ -132,17 +132,18 @@ xdg-open TaiYi.html    # Linux
 ```text
 TaiYi/
 ├── TaiYi.html               # 交付物：自包含单文件，唯一入口，双击即用
-├── src/                   # 源码（改这里）
-│   ├── index.html         #   页面骨架
-│   ├── assets/style.css   #   宣纸风设计系统
-│   ├── assets/app.js      #   起卦 / 解卦 / 追问 / 卦史
-│   └── data/zhouyi.js     #   64 卦 · 384 爻数据表
-└── tools/                 # 构建与自检脚本
-    ├── build-data.js      #   数据清洗 + 一致性自检
-    ├── selftest.js        #   概率分布 + 卦象查表 + 记号几何
-    ├── bundle.js          #   src/ → TaiYi.html
-    ├── smoke.js           #   jsdom 无头冒烟测试
-    └── raw/               #   原始数据、校勘日志、测试报告
+├── package.json             # 仅开发用：devDependency 与 npm scripts
+├── src/                     # 源码（改这里）
+│   ├── index.html           #   页面骨架
+│   ├── assets/style.css     #   宣纸风设计系统
+│   ├── assets/app.js        #   起卦 / 解卦 / 追问 / 卦史
+│   └── data/zhouyi.js       #   64 卦 · 384 爻数据表
+└── tools/                   # 构建与自检脚本（路径相对仓库根，克隆即可运行）
+    ├── build-data.js        #   数据清洗 + 一致性自检
+    ├── selftest.js          #   概率分布 + 卦象查表 + 记号几何
+    ├── bundle.js            #   src/ → TaiYi.html
+    ├── smoke.js             #   jsdom 无头冒烟测试
+    └── raw/                 #   原始数据、校勘日志、测试报告
 ```
 
 **为什么有源码和产物两份**：源码拆开才好维护（光数据就 75 KB）；打包成单文件才好用（不怕漏拷 `assets/` 目录）。改了源码一定要重新 `bundle`，否则交付的是旧版。
@@ -151,27 +152,23 @@ TaiYi/
 
 ## 开发
 
-纯前端，没有框架、没有构建工具、没有包依赖。脚本只需要 Node。
+**运行时零依赖**——`TaiYi.html` 双击就能用，不需要 Node 或任何包。
+
+只有改源码、重建数据或跑测试时才需要 Node ≥ 18，以及两个 devDependency：
+`opencc-js`（简繁转换，仅重建数据时用）和 `jsdom`（无头冒烟测试）。
 
 ```bash
-# Node 解释器（本机路径，版本会变，用前先确认）
-NODE="C:/Users/86151/.workbuddy/binaries/node/versions/22.22.2-6/node.exe"
-export NODE_PATH="C:/Users/86151/.workbuddy/binaries/node/workspace/node_modules"
+npm install
 
-# 1. 数据校勘（改了 data 才需要跑）
-"$NODE" tools/build-data.js
+npm run build:data   # 数据校勘：从 tools/raw/gua64.json 重建 src/data/zhouyi.js
+npm test             # 算法与数据自检：概率分布、卦象查表、经文完整性
+npm run build        # 从 src/ 打包出 TaiYi.html
+npm run smoke        # jsdom 无头冒烟测试
 
-# 2. 算法与数据自检
-"$NODE" tools/selftest.js
-
-# 3. 打包单文件
-"$NODE" tools/bundle.js
-
-# 4. 无头冒烟测试
-"$NODE" tools/smoke.js
+npm run check        # 自检 + 打包 + 冒烟，一次跑完
 ```
 
-四条都跑绿再交付。测试报告在 `tools/raw/*.log`。
+四条都绿再交付。测试报告写到 `tools/raw/*.log`。
 
 **改代码时两条铁律**：
 

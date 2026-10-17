@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const OpenCC = require('opencc-js');
 
-const SRC = 'D:/WorkBuddy/TaiYi/tools/raw/gua64.json';
-const OUT = 'D:/WorkBuddy/TaiYi/src/data/zhouyi.js';
-const LOG = 'D:/WorkBuddy/TaiYi/tools/raw/build.log';
+const ROOT = path.resolve(__dirname, '..');
+const SRC = path.join(ROOT, 'tools/raw/gua64.json');
+const OUT = path.join(ROOT, 'src/data/zhouyi.js');
+const LOG = path.join(ROOT, 'tools/raw/build.log');
 
 const t2s = OpenCC.Converter({ from: 't', to: 'cn' });
 

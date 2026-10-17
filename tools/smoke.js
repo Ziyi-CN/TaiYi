@@ -3,10 +3,12 @@
  *   A. 金钱卦动画期间连点 8 下 —— 早先会把第 7 个爻塞进数组
  *   B. 大衍筮法第三变后的 700ms 空窗期 —— 早先会多算一变、爻值算错            */
 const fs = require('fs');
+const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
 
-const FILE = 'D:/WorkBuddy/TaiYi/TaiYi.html';
-const OUT = 'D:/WorkBuddy/TaiYi/tools/raw/smoke.log';
+const ROOT = path.resolve(__dirname, '..');
+const FILE = path.join(ROOT, 'TaiYi.html');
+const OUT = path.join(ROOT, 'tools/raw/smoke.log');
 const log = [];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const errors = [];

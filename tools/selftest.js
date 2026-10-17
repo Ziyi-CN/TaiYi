@@ -1,8 +1,10 @@
 /* 自检：从 assets/app.js 抽取真实算法源码运行，验证概率分布与卦象查表 */
 const fs = require('fs');
-const APP = 'D:/WorkBuddy/TaiYi/src/assets/app.js';
-const DATA = 'D:/WorkBuddy/TaiYi/src/data/zhouyi.js';
-const OUT = 'D:/WorkBuddy/TaiYi/tools/raw/selftest.log';
+const path = require('path');
+const ROOT = path.resolve(__dirname, '..');
+const APP = path.join(ROOT, 'src/assets/app.js');
+const DATA = path.join(ROOT, 'src/data/zhouyi.js');
+const OUT = path.join(ROOT, 'tools/raw/selftest.log');
 
 const src = fs.readFileSync(APP, 'utf8');
 const lines = [];

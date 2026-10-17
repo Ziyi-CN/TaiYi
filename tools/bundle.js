@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = 'D:/WorkBuddy/TaiYi';
+const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'src');
 const html = fs.readFileSync(path.join(SRC, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(SRC, 'assets/style.css'), 'utf8');
